@@ -36,7 +36,7 @@ CREATE TABLE EmployeAddress
         Country VARCHAR(50) NOT NUll,
         PostCode VARCHAR(10) NOT NUll,
         HouseNumber VARCHAR(10) NOT NUll,
-        residence BIT NOT NULL,
+        Residence BIT NOT NULL,
         CONSTRAINT Employe_EmployeAddress FOREIGN KEY (BSN) REFERENCES Employe (BSN),
         CONSTRAINT Address_EmployeAddress FOREIGN KEY (Country, PostCode, HouseNumber) REFERENCES Address (Country,PostCode,HouseNumber),
         CONSTRAINT EmployeAddress_PK PRIMARY KEY  (BSN, Country, PostCode, HouseNumber)
@@ -69,7 +69,11 @@ CREATE TABLE Position(
     Description TEXT,
     HourFee money NOT NULL,
     BSN int NOT NULL,
-    CONSTRAINT Employe_Position FOREIGN KEY (BSN) REFERENCES Employe (BSN)
+	ProjectID int,
+    CONSTRAINT Employe_Position FOREIGN KEY (BSN) REFERENCES Employe (BSN),
+	CONSTRAINT Project_Position FOREIGN KEY (ProjectID) REFERENCES Project (ProjectID),
+	PRIMARY KEY (BSN, PositionName, ProjectID)
 );
+
 
 
