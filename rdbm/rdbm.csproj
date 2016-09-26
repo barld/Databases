@@ -59,6 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="db.sql" />
     <Content Include="Employe.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

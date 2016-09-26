@@ -8,6 +8,14 @@ namespace EmployeDataModels
 {
     public class Position
     {
+        public string PositionName { get; set; }
+        public string Description { get; set; }
+        public float HourFee { get; set; }
 
+        public int BSN { get; set; }
+        public int ProjectID { get;set;}
+
+        public Employe Employe { get; set; }
+        public Project Project { get; set; }
     }
 }
