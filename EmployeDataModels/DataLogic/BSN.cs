@@ -34,5 +34,11 @@ namespace EmployeDataModels.DataLogic
                 return 0;
             }
         }
+
+        public static IEnumerable<int> GnerateBSNs(int start = 111111111)
+        {
+            for(int i = start; ; i++)
+                if (i.IsValidBSN()) yield return i;
+        }
     }
 }
