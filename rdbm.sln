@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rdbm", "rdbm\rdbm.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication", "ConsoleApplication\ConsoleApplication.csproj", "{F5EEC6FE-D119-4671-AAB2-7ADF3AC70635}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeDataModels", "EmployeDataModels\EmployeDataModels.csproj", "{123807BB-8447-41BF-8027-A83585B3A794}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F5EEC6FE-D119-4671-AAB2-7ADF3AC70635}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5EEC6FE-D119-4671-AAB2-7ADF3AC70635}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5EEC6FE-D119-4671-AAB2-7ADF3AC70635}.Release|Any CPU.Build.0 = Release|Any CPU
+		{123807BB-8447-41BF-8027-A83585B3A794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{123807BB-8447-41BF-8027-A83585B3A794}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{123807BB-8447-41BF-8027-A83585B3A794}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{123807BB-8447-41BF-8027-A83585B3A794}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
