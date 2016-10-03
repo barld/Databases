@@ -21,25 +21,25 @@ CREATE TABLE HeadQuater(
     CONSTRAINT HeadQuater_Address FOREIGN KEY (Country, PostCode, HouseNumber) REFERENCES Address (Country,PostCode,HouseNumber)
 );
 
-CREATE TABLE Employe
+CREATE TABLE Employee
     (
         BSN int PRIMARY KEY NOT NUll,
         Name VARCHAR(100) NOT NULL,
         SurName VARCHAR(100) NOT NUll,
         BuildingName VARCHAR(50) NOT NULL,
-        CONSTRAINT Employe_HeadQuater FOREIGN KEY (BuildingName) REFERENCES HeadQuater (BuildingName)
+        CONSTRAINT Employee_HeadQuater FOREIGN KEY (BuildingName) REFERENCES HeadQuater (BuildingName)
     );
 
-CREATE TABLE EmployeAddress
+CREATE TABLE EmployeeAddress
     (
         BSN int NOT NUll,
         Country VARCHAR(50) NOT NUll,
         PostCode VARCHAR(10) NOT NUll,
         HouseNumber VARCHAR(10) NOT NUll,
         Residence BIT NOT NULL,
-        CONSTRAINT Employe_EmployeAddress FOREIGN KEY (BSN) REFERENCES Employe (BSN),
-        CONSTRAINT Address_EmployeAddress FOREIGN KEY (Country, PostCode, HouseNumber) REFERENCES Address (Country,PostCode,HouseNumber),
-        CONSTRAINT EmployeAddress_PK PRIMARY KEY  (BSN, Country, PostCode, HouseNumber)
+        CONSTRAINT Employee_EmployeeAddress FOREIGN KEY (BSN) REFERENCES Employee (BSN),
+        CONSTRAINT Address_EmployeeAddress FOREIGN KEY (Country, PostCode, HouseNumber) REFERENCES Address (Country,PostCode,HouseNumber),
+        CONSTRAINT EmployeeAddress_PK PRIMARY KEY  (BSN, Country, PostCode, HouseNumber)
     );
 
 --choose key
@@ -50,7 +50,7 @@ CREATE TABLE Degree
         School VARCHAR(150) NOT NUll,
         Level VARCHAR(100) NOT NULL,
         BSN int Not NULL,
-        CONSTRAINT Epmloye_Degree FOREIGN KEY (BSN) REFERENCES Employe (BSN)
+        CONSTRAINT Employee_Degree FOREIGN KEY (BSN) REFERENCES Employee (BSN)
     );
 
 
@@ -70,7 +70,7 @@ CREATE TABLE Position(
     HourFee money NOT NULL,
     BSN int NOT NULL,
 	ProjectID int,
-    CONSTRAINT Employe_Position FOREIGN KEY (BSN) REFERENCES Employe (BSN),
+    CONSTRAINT Employee_Position FOREIGN KEY (BSN) REFERENCES Employee (BSN),
 	CONSTRAINT Project_Position FOREIGN KEY (ProjectID) REFERENCES Project (ProjectID),
 	PRIMARY KEY (BSN, PositionName, ProjectID)
 );
