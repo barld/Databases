@@ -15,7 +15,7 @@ namespace EmployeDataModels
         public int BSN { get; set; }
         public int ProjectID { get;set;}
 
-        public Employe Employe { get; set; }
+        public Employee Employee { get; set; }
         public Project Project { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EmployeDataModels;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -8,25 +9,35 @@ using System.Threading.Tasks;
 
 namespace rdbm
 {
-    public class EmployeGateWay
+    public class EmployeeGateWay
     {
-        public static void GetAll()
+        private readonly MDFConnection con;
+
+        public EmployeeGateWay(MDFConnection connection)
         {
-            var dt = new DataTable();
-            //Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="C:\Users\barld\documents\visual studio 2015\Projects\rdbm\rdbm\Employe.mdf";Integrated Security=True
-            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;
-                          AttachDbFilename=C:\Users\barld\documents\visual studio 2015\Projects\rdbm\rdbm\Employe.mdf;
-                          Integrated Security=True;
-                          Connect Timeout=30;
-                          Integrated Security=True";
-            using (var cn = new SqlConnection(connectionString))
-            using (var cmd = new SqlCommand("Select * From [Employe]", cn))
+            con = connection;
+        }
+
+        private Employee map(SqlDataReader reader)
+        {
+            return new Employee
             {
-                cn.Open();
+                BSN = reader.GetInt32(0)
+                //..
+            };
+        }
+
+        public IEnumerable<Employee> GetAll()
+        {
+            if(con.connection.State != ConnectionState.Open)
+                con.connection.Open();
+            using (var cmd = new SqlCommand("Select * From [Employe]", con.connection))
+            {
 
                 using (var reader = cmd.ExecuteReader())
                 {
-                    dt.Load(reader);
+                    while (reader.Read())
+                        yield return map(reader);
                 }
             }
         }

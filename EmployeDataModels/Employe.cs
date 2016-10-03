@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EmployeDataModels
 {
-    public class Employe
+    public class Employee
     {
         /// <summary>
         /// primary key

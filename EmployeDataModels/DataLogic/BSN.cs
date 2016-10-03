@@ -19,6 +19,12 @@ namespace EmployeDataModels.DataLogic
             return BSNSum(BSN, 1) % 11 == 0;
         }
 
+        /// <summary>
+        /// !only for private use
+        /// </summary>
+        /// <param name="BSN"></param>
+        /// <param name="position"></param>
+        /// <returns></returns>
         private static int BSNSum(int BSN, int position)
         {
             if(position == 1)
@@ -37,8 +43,8 @@ namespace EmployeDataModels.DataLogic
 
         public static IEnumerable<int> GnerateBSNs(int start = 111111111)
         {
-            for(int i = start; ; i++)
-                if (i.IsValidBSN()) yield return i;
+            for(; ; start++)
+                if (start.IsValidBSN()) yield return start;
         }
     }
 }

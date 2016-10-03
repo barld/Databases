@@ -10,7 +10,7 @@ namespace ConsoleApplication
     {
         static void Main(string[] args)
         {
-            rdbm.EmployeGateWay.GetAll();
+            rdbm.EmployeeGateWay.GetAll();
         }
     }
 }

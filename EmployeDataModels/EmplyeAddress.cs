@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EmployeDataModels
 {
-    public class EmplyeAddress
+    public class EmployeeAddress
     {
         public int BSN { get; set; }
         public string Country { get; set; }
@@ -14,7 +14,7 @@ namespace EmployeDataModels
         public string HouseNumber { get; set; }
         public bool Residence { get; set; }
 
-        public Employe Employe { get; set; }
+        public Employee Employee { get; set; }
         public Address Address { get; set; }
     }
 }
