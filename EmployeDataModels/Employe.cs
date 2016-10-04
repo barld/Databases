@@ -13,6 +13,7 @@ namespace EmployeDataModels
         /// </summary>
         public int BSN { get; set; }
         public string Name { get; set; }
+        public string SurName { get; set; }
         /// <summary>
         /// fk to HeadQuater
         /// </summary>

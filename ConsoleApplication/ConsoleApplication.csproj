@@ -50,6 +50,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EmployeDataModels\EmployeDataModels.csproj">
+      <Project>{123807bb-8447-41bf-8027-a83585b3a794}</Project>
+      <Name>EmployeDataModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\rdbm\rdbm.csproj">
       <Project>{4357f6f5-5398-4542-a7c2-7f7909e2cd03}</Project>
       <Name>rdbm</Name>

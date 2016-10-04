@@ -27,6 +27,42 @@ namespace rdbm
             };
         }
 
+
+        public void addHQ(HeadQuater hq)
+        {
+            if (con.connection.State != ConnectionState.Open)
+                con.connection.Open();
+
+            using (var cmd = new SqlCommand(string.Format("INSERT INTO [HeadQuater] values ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}')", 
+                hq.BuildingName, hq.Rooms, hq.Rent, hq.Country, hq.PostCode, hq.HouseNumber), con.connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void addADR(Address adr)
+        {
+            if (con.connection.State != ConnectionState.Open)
+                con.connection.Open();
+
+            using (var cmd = new SqlCommand(string.Format("INSERT INTO [Address] values ('{0}', '{1}', '{2}', '{3}', '{4}')",
+                adr.Country, adr.PostCode, adr.HouseNumber, adr.City, adr.Street), con.connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void add(Employee employee)
+        {
+            if (con.connection.State != ConnectionState.Open)
+                con.connection.Open();
+
+            using (var cmd = new SqlCommand(string.Format("INSERT INTO [Employe] values ('{0}', '{1}', '{2}', '{3}')", employee.BSN, employee.Name, employee.SurName, employee.BuildingName), con.connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+        }
+              
         public IEnumerable<Employee> GetAll()
         {
             if(con.connection.State != ConnectionState.Open)

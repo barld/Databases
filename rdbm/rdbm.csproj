@@ -55,9 +55,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContext.cs" />
+    <Compile Include="DataMapper.cs" />
     <Compile Include="EmployeGateWay.cs" />
     <Compile Include="MDFConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="db.sql" />
