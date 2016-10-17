@@ -25,8 +25,8 @@ let getState () =
 
 
 let createGate (belongsTo:string) number =
-    sprintf "(%s_%i:Gate{number:%i}), (%s_%i)-[:Is]->(%s)" belongsTo number number belongsTo number (getState())
-    + (sprintf ",(%s_%i)-[:BlongsTo]->(%s)" belongsTo number belongsTo)
+    sprintf "(%s_%i:Gate{number:%i, state:\"%s\"})" belongsTo number number (getState())
+    + (sprintf ",(%s_%i)-[:BelongsTo]->(%s)" belongsTo number belongsTo)
 createGate "AMS_B" 2
 
 let createTerminal airportCode code =
