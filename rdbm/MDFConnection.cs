@@ -21,6 +21,6 @@ namespace rdbm
             connection = new SqlConnection(connectionString);
         }
 
-        public MDFConnection() : this(@"C:\Users\Daan\Desktop\Databases\rdbm\Employe.mdf") { }
+        public MDFConnection() : this(@"C:\Users\barld\Documents\Visual Studio 2015\Projects\rdbm\rdbm\Employe.mdf") { }
     }
 }

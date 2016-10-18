@@ -29,8 +29,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -43,8 +47,8 @@
     <Compile Include="Address.cs" />
     <Compile Include="DataLogic\BSN.cs" />
     <Compile Include="Degree.cs" />
-    <Compile Include="Employe.cs" />
-    <Compile Include="EmplyeAddress.cs" />
+    <Compile Include="Employee.cs" />
+    <Compile Include="EmplyeeAddress.cs" />
     <Compile Include="HeadQuater.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="Project.cs" />

@@ -22,9 +22,27 @@ namespace rdbm
         {
             return new Employee
             {
-                BSN = reader.GetInt32(0)
-                //..
+                BSN = reader.GetInt32(0),
+                Name = reader.GetString(1),
+                SurName = reader.GetString(2),
+                BuildingName = reader.GetString(3)
+                
             };
+        }
+
+        public IEnumerable<Employee> GetAll()
+        {
+            if (con.connection.State != ConnectionState.Open)
+                con.connection.Open();
+            using (var cmd = new SqlCommand("Select * From [Employee]", con.connection))
+            {
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                        yield return map(reader);
+                }
+            }
         }
 
 
@@ -52,7 +70,7 @@ namespace rdbm
             }
         }
 
-        public void add(Employee employee)
+        public void Add(Employee employee)
         {
             if (con.connection.State != ConnectionState.Open)
                 con.connection.Open();
@@ -63,19 +81,6 @@ namespace rdbm
             }
         }
               
-        public IEnumerable<Employee> GetAll()
-        {
-            if(con.connection.State != ConnectionState.Open)
-                con.connection.Open();
-            using (var cmd = new SqlCommand("Select * From [Employe]", con.connection))
-            {
-
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                        yield return map(reader);
-                }
-            }
-        }
+        
     }
 }
