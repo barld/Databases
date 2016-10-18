@@ -63,7 +63,7 @@
     <Compile Include="SqlProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="db.sql" />
+    <Content Include="SQL\db.sql" />
     <Content Include="Employe.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
