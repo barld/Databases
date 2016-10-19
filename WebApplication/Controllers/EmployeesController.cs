@@ -25,13 +25,17 @@ namespace WebApplication.Controllers
         }
 
         // GET: Employees/Details/5
-        public async Task<ActionResult> Details(int? BSN)
+        [Route("Employees/Details/{BSN}")]
+        public ActionResult Details(int? BSN)
         {
             if (BSN == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = await db.Employees.FindAsync(BSN);
+            // is always safe because there is a null check
+            // it is just to trick te compiler
+            int bSN = BSN ?? 0;
+            Employee employee = gateWay.FindByBSN(bSN);
             if (employee == null)
             {
                 return HttpNotFound();

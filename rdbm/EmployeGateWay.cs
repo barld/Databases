@@ -45,6 +45,22 @@ namespace rdbm
             }
         }
 
+        public Employee FindByBSN(int BSN)
+        {
+            if (con.connection.State != ConnectionState.Open)
+                con.connection.Open();
+            using (var cmd = new SqlCommand("Select TOP 1 * From [Employee] WHERE [Employee].[BSN] = @BSN", con.connection))
+            {
+                cmd.Parameters.Add("@BSN", SqlDbType.Int);
+                cmd.Parameters["@BSN"].Value = BSN;
+                using (var reader = cmd.ExecuteReader())
+                {
+                    reader.Read();
+                    return map(reader);
+                }
+            }
+
+        }
 
         public void addHQ(HeadQuater hq)
         {

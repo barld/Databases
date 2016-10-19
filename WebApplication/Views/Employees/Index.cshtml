@@ -41,9 +41,9 @@
             @Html.DisplayFor(modelItem => item.HeadQuater)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BSN }) |
-            @Html.ActionLink("Details", "Details", new { id=item.BSN }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.BSN })
+            @Html.ActionLink("Edit", "Edit", new { BSN=item.BSN }) |
+            @Html.ActionLink("Details", "Details", new { BSN=item.BSN }) |
+            @Html.ActionLink("Delete", "Delete", new { BSN=item.BSN })
         </td>
     </tr>
 }
