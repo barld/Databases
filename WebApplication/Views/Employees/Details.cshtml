@@ -33,14 +33,38 @@
         <dd>
             @Html.DisplayFor(model => model.BuildingName)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HeadQuater)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HeadQuater)
-        </dd>
+        <h3>Adresses</h3>
+        <ul>
+            @foreach (var ea in Model.Adresses)
+            {
+                <li>
+                    <dl>
+                        <dt>@Html.DisplayNameFor(model => ea.Country)</dt>
+                        <dd>@Html.DisplayFor(model => ea.Country)</dd>
+                    </dl>
+                    <dl>
+                        <dt>@Html.DisplayNameFor(model => ea.Address.City)</dt>
+                        <dd>@Html.DisplayFor(model => ea.Address.City)</dd>
+                    </dl>
+                    <dl>
+                        <dt>@Html.DisplayNameFor(model => ea.Address.Street)</dt>
+                        <dd>@Html.DisplayFor(model => ea.Address.Street)</dd>
+                    </dl>
+                    <dl>
+                        <dt>@Html.DisplayNameFor(model => ea.Address.HouseNumber)</dt>
+                        <dd>@Html.DisplayFor(model => ea.Address.HouseNumber)</dd>
+                    </dl>
+                    <dl>
+                        <dt>@Html.DisplayNameFor(model => ea.Address.PostCode)</dt>
+                        <dd>@Html.DisplayFor(model => ea.Address.PostCode)</dd>
+                    </dl>
+                    <dl>
+                        <dt>@Html.DisplayNameFor(model => ea.Residence)</dt>
+                        <dd>@Html.DisplayFor(model => ea.Residence)</dd>
+                    </dl>
+                </li>
+            }
+        </ul>
 
     </dl>
 </div>

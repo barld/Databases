@@ -23,6 +23,6 @@ namespace EmployeDataModels
 
         public HeadQuater HeadQuater { get; set; }
 
-        public virtual IEnumerable<Address> Adresses { get; set; }
+        public virtual IEnumerable<EmployeeAddress> Adresses { get; set; }
     }
 }

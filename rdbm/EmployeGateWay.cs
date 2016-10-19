@@ -30,6 +30,10 @@ namespace rdbm
             };
         }
 
+        /// <summary>
+        /// get all users excluding his/her Adresses
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Employee> GetAll()
         {
             if (con.connection.State != ConnectionState.Open)
@@ -45,18 +49,67 @@ namespace rdbm
             }
         }
 
+        private Employee fullMap(SqlDataReader reader)
+        {
+            var emp = new Employee
+            {
+                BSN = reader.GetInt32(0),
+                Name = reader.GetString(1),
+                SurName = reader.GetString(2),
+                BuildingName = reader.GetString(3),
+                Adresses = new List<EmployeeAddress>()
+
+            };
+            do
+            {
+                //there is no result
+                if(!reader.IsDBNull(4))
+                    ((List<EmployeeAddress>)emp.Adresses).Add(new EmployeeAddress
+                    {
+                        BSN = emp.BSN,
+                        Residence = reader.GetBoolean(4),
+                        Country = reader.GetString(5),
+                        PostCode = reader.GetString(6),
+                        HouseNumber = reader.GetString(7),
+                        Employee = emp,
+                        Address = new Address
+                        {
+                            Country = reader.GetString(5),
+                            PostCode = reader.GetString(6),
+                            HouseNumber = reader.GetString(7),
+                            City = reader.GetString(8),
+                            Street = reader.GetString(9)
+                        }
+                    });
+            }
+            while (reader.Read());
+
+            return emp;
+        }
+
         public Employee FindByBSN(int BSN)
         {
             if (con.connection.State != ConnectionState.Open)
                 con.connection.Open();
-            using (var cmd = new SqlCommand("Select TOP 1 * From [Employee] WHERE [Employee].[BSN] = @BSN", con.connection))
+            var sql =
+                    @"Select [Employee].*, [EmployeeAddress].Residence, [Address].*
+                    From [Employee]
+                    LEFT JOIN [EmployeeAddress] ON [Employee].[BSN] = [EmployeeAddress].[BSN]
+                    LEFT JOIN [Address] ON
+	                    [EmployeeAddress].[Country] = [Address].[Country] AND 
+	                    [EmployeeAddress].[PostCode] = [Address].[PostCode] AND 
+	                    [EmployeeAddress].[HouseNumber] = [Address].[HouseNumber]
+                    WHERE 
+	                    [Employee].[BSN] = @BSN";
+
+            using (var cmd = new SqlCommand(sql, con.connection))
             {
                 cmd.Parameters.Add("@BSN", SqlDbType.Int);
                 cmd.Parameters["@BSN"].Value = BSN;
                 using (var reader = cmd.ExecuteReader())
                 {
                     reader.Read();
-                    return map(reader);
+                    return fullMap(reader);
                 }
             }
 
