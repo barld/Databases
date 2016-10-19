@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,6 @@ namespace rdbm
             connection = new SqlConnection(connectionString);
         }
 
-        public MDFConnection() : this(@"C:\Users\barld\Documents\Visual Studio 2015\Projects\rdbm\rdbm\Employe.mdf") { }
+        public MDFConnection() : this(System.IO.Path.Combine(AppDomain.CurrentDomain.RelativeSearchPath.Replace("WebApplication\\bin",""), @"rdbm\Employe.mdf")) { }
     }
 }
