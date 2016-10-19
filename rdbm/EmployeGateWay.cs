@@ -142,6 +142,8 @@ namespace rdbm
 
         public void Add(Employee employee)
         {
+            // TODO: add logic to check if addresse exists and add conection to the employee
+
             if (con.connection.State != ConnectionState.Open)
                 con.connection.Open();
             var sql = @"INSERT INTO [Employee](BSN, Name, SurName, BuildingName) 
