@@ -87,6 +87,7 @@ namespace rdbm
             return emp;
         }
 
+
         public Employee FindByBSN(int BSN)
         {
             if (con.connection.State != ConnectionState.Open)
@@ -143,9 +144,24 @@ namespace rdbm
         {
             if (con.connection.State != ConnectionState.Open)
                 con.connection.Open();
+            var sql = @"INSERT INTO [Employee](BSN, Name, SurName, BuildingName) 
+                values (@BSN, @Name, @Surname, @BuildingName)";
 
-            using (var cmd = new SqlCommand(string.Format("INSERT INTO [Employe] values ('{0}', '{1}', '{2}', '{3}')", employee.BSN, employee.Name, employee.SurName, employee.BuildingName), con.connection))
+            using (var cmd = new SqlCommand(sql, con.connection))
             {
+                cmd.Parameters.Add("@BSN", SqlDbType.Int);
+                cmd.Parameters["@BSN"].Value = employee.BSN;
+
+                cmd.Parameters.Add("@Name", SqlDbType.VarChar);
+                cmd.Parameters["@Name"].Value = employee.Name;
+
+                cmd.Parameters.Add("@Surname", SqlDbType.VarChar);
+                cmd.Parameters["@Surname"].Value = employee.SurName;
+
+                cmd.Parameters.Add("@BuildingName", SqlDbType.VarChar);
+                cmd.Parameters["@BuildingName"].Value = employee.BuildingName;
+
+
                 cmd.ExecuteNonQuery();
             }
         }

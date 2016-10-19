@@ -16,7 +16,7 @@ namespace ConsoleApplication
 
             var db = new rdbm.DataContext();
 
-            var test = db.Query<Employee>("Select * From [Employe]").GetEnumerator();
+            var test = db.Query<Employee>("Select * From [Employee]").GetEnumerator();
 
 
 

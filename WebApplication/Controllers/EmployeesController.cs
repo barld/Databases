@@ -56,12 +56,11 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BSN,Name,SurName,BuildingName,HeadQuater")] Employee employee)
+        public ActionResult Create([Bind(Include = "BSN,Name,SurName,BuildingName")] Employee employee)
         {
             if (ModelState.IsValid)
             {
-                db.Employees.Add(employee);
-                db.SaveChangesAsync();
+                context.Employees.Add(employee);
                 return RedirectToAction("Index");
             }
 
