@@ -165,6 +165,22 @@ namespace rdbm
                 cmd.ExecuteNonQuery();
             }
         }
+
+        public void DeleteByBSN(int BSN)
+        {
+            if (con.connection.State != ConnectionState.Open)
+                con.connection.Open();
+            var sql = @"DELETE FROM [Employee] WHERE [Employee].[BSN] = @BSN";
+
+            using (var cmd = new SqlCommand(sql, con.connection))
+            {
+                cmd.Parameters.Add("@BSN", SqlDbType.Int);
+                cmd.Parameters["@BSN"].Value = BSN;
+
+
+                cmd.ExecuteNonQuery();
+            }
+        }
               
         
     }

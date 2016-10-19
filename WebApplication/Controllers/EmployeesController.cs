@@ -63,7 +63,7 @@ namespace WebApplication.Controllers
                 context.Employees.Add(employee);
                 return RedirectToAction("Index");
             }
-
+            ViewBag.HeadQuaterList = new SelectList(context.HeadQuaters.GetAll().Select(hq => hq.BuildingName));
             return View(employee);
         }
 
@@ -99,13 +99,13 @@ namespace WebApplication.Controllers
         }
 
         // GET: Employees/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        public async Task<ActionResult> Delete(int? BSN)
         {
-            if (id == null)
+            if (BSN == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = await db.Employees.FindAsync(id);
+            Employee employee = context.Employees.FindByBSN(BSN ?? 0);
             if (employee == null)
             {
                 return HttpNotFound();
@@ -116,11 +116,9 @@ namespace WebApplication.Controllers
         // POST: Employees/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int BSN)
         {
-            Employee employee = await db.Employees.FindAsync(id);
-            db.Employees.Remove(employee);
-            await db.SaveChangesAsync();
+            context.Employees.DeleteByBSN(BSN);
             return RedirectToAction("Index");
         }
 
