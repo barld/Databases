@@ -21,7 +21,7 @@ namespace WebApplication.Controllers
         // GET: Employees
         public ActionResult Index()
         {
-            return View(context.Employee.GetAll());
+            return View(context.Employees.GetAll());
         }
 
         // GET: Employees/Details/5
@@ -35,7 +35,7 @@ namespace WebApplication.Controllers
             // is always safe because there is a null check
             // it is just to trick te compiler
             int bSN = BSN ?? 0;
-            Employee employee = context.Employee.FindByBSN(bSN);
+            Employee employee = context.Employees.FindByBSN(bSN);
             if (employee == null)
             {
                 return HttpNotFound();
@@ -46,7 +46,7 @@ namespace WebApplication.Controllers
         // GET: Employees/Create
         public ActionResult Create()
         {
-
+            ViewBag.HeadQuaterList = new SelectList(context.HeadQuaters.GetAll().Select(hq => hq.BuildingName));
 
             return View();
         }
@@ -56,12 +56,12 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "BSN,Name,SurName,BuildingName,HeadQuater")] Employee employee)
+        public ActionResult Create([Bind(Include = "BSN,Name,SurName,BuildingName,HeadQuater")] Employee employee)
         {
             if (ModelState.IsValid)
             {
                 db.Employees.Add(employee);
-                await db.SaveChangesAsync();
+                db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 

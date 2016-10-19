@@ -8,19 +8,22 @@ namespace rdbm
 {
     public interface IContext
     {
-        EmployeeGateWay Employee { get; }
+        EmployeeGateWay Employees { get; }
+        HeadQuaterGateWay HeadQuaters { get; }
     }
 
 
     public class Context : IContext
     {
-        public EmployeeGateWay Employee { get; }
+        public EmployeeGateWay Employees { get; }
+        public HeadQuaterGateWay HeadQuaters { get; }
 
         public Context()
         {
             var connection = new MDFConnection();
 
-            Employee = new EmployeeGateWay(connection);
+            Employees = new EmployeeGateWay(connection);
+            HeadQuaters = new HeadQuaterGateWay(connection);
         }
     }
 
