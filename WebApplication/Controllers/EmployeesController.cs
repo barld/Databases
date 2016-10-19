@@ -16,12 +16,12 @@ namespace WebApplication.Controllers
     public class EmployeesController : Controller
     {
         private WebApplicationContext db = new WebApplicationContext();
-        EmployeeGateWay gateWay = new EmployeeGateWay(new MDFConnection());
+        Context context = new Context();
 
         // GET: Employees
         public ActionResult Index()
         {
-            return View(gateWay.GetAll());
+            return View(context.Employee.GetAll());
         }
 
         // GET: Employees/Details/5
@@ -35,7 +35,7 @@ namespace WebApplication.Controllers
             // is always safe because there is a null check
             // it is just to trick te compiler
             int bSN = BSN ?? 0;
-            Employee employee = gateWay.FindByBSN(bSN);
+            Employee employee = context.Employee.FindByBSN(bSN);
             if (employee == null)
             {
                 return HttpNotFound();
