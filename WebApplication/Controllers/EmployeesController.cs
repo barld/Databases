@@ -15,13 +15,12 @@ namespace WebApplication.Controllers
 {
     public class EmployeesController : Controller
     {
-        private WebApplicationContext db = new WebApplicationContext();
-        EmployeeGateWay gateWay = new EmployeeGateWay(new MDFConnection());
+        Context context = new Context();
 
         // GET: Employees
         public ActionResult Index()
         {
-            return View(gateWay.GetAll());
+            return View(context.Employees.GetAll());
         }
 
         // GET: Employees/Details/5
@@ -35,7 +34,7 @@ namespace WebApplication.Controllers
             // is always safe because there is a null check
             // it is just to trick te compiler
             int bSN = BSN ?? 0;
-            Employee employee = gateWay.FindByBSN(bSN);
+            Employee employee = context.Employees.FindByBSN(bSN);
             if (employee == null)
             {
                 return HttpNotFound();
@@ -46,7 +45,7 @@ namespace WebApplication.Controllers
         // GET: Employees/Create
         public ActionResult Create()
         {
-
+            ViewBag.HeadQuaterList = new SelectList(context.HeadQuaters.GetAll().Select(hq => hq.BuildingName));
 
             return View();
         }
@@ -56,30 +55,32 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "BSN,Name,SurName,BuildingName,HeadQuater")] Employee employee)
+        public ActionResult Create(CreateEmployee cEmployee)
         {
             if (ModelState.IsValid)
             {
-                db.Employees.Add(employee);
-                await db.SaveChangesAsync();
+                var employee = cEmployee.toEmployee();
+
+                context.Employees.Add(employee);
                 return RedirectToAction("Index");
             }
-
-            return View(employee);
+            ViewBag.HeadQuaterList = new SelectList(context.HeadQuaters.GetAll().Select(hq => hq.BuildingName));
+            return View(cEmployee);
         }
 
         // GET: Employees/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = await db.Employees.FindAsync(id);
+            var employee =  new CreateEmployee(context.Employees.FindByBSN(id ?? 0));
             if (employee == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.HeadQuaterList = new SelectList(context.HeadQuaters.GetAll().Select(hq => hq.BuildingName));
             return View(employee);
         }
 
@@ -88,25 +89,25 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "BSN,Name,SurName,BuildingName,HeadQuater")] Employee employee)
+        public async Task<ActionResult> Edit(CreateEmployee employee)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(employee).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                context.Employees.Update(employee.toEmployee());
                 return RedirectToAction("Index");
             }
+            ViewBag.HeadQuaterList = new SelectList(context.HeadQuaters.GetAll().Select(hq => hq.BuildingName));
             return View(employee);
         }
 
         // GET: Employees/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        public async Task<ActionResult> Delete(int? BSN)
         {
-            if (id == null)
+            if (BSN == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = await db.Employees.FindAsync(id);
+            Employee employee = context.Employees.FindByBSN(BSN ?? 0);
             if (employee == null)
             {
                 return HttpNotFound();
@@ -117,11 +118,9 @@ namespace WebApplication.Controllers
         // POST: Employees/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int BSN)
         {
-            Employee employee = await db.Employees.FindAsync(id);
-            db.Employees.Remove(employee);
-            await db.SaveChangesAsync();
+            context.Employees.DeleteByBSN(BSN);
             return RedirectToAction("Index");
         }
 
@@ -129,7 +128,6 @@ namespace WebApplication.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
             }
             base.Dispose(disposing);
         }
