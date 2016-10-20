@@ -13,9 +13,7 @@ namespace EmployeDataModels
         public float HourFee { get; set; }
 
         public int BSN { get; set; }
-        public int ProjectID { get;set;}
 
         public Employee Employee { get; set; }
-        public Project Project { get; set; }
     }
 }

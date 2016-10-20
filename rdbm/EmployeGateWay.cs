@@ -121,6 +121,7 @@ namespace rdbm
             }
             var degreesGateWay = context.Degrees as DegreesGateWay;
             emp.Degrees = degreesGateWay.GetAllByBSN(BSN);
+            emp.Positions = context.Positions.GetAllByBSN(BSN);
             return emp;
         }
 

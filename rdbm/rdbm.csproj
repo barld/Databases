@@ -63,6 +63,7 @@
     <Compile Include="EmployeGateWay.cs" />
     <Compile Include="HeadQuaterGateWay.cs" />
     <Compile Include="MDFConnection.cs" />
+    <Compile Include="PositionGateWay.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="old\SqlProvider.cs" />
   </ItemGroup>

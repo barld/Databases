@@ -37,6 +37,7 @@
         <ul>
             @foreach (var ea in Model.Adresses)
             {
+                <hr />
                 <li>
                     <dl>
                         <dt>@Html.DisplayNameFor(model => ea.Country)</dt>
@@ -69,6 +70,7 @@
         <ul>
             @foreach (var degree in Model.Degrees)
             {
+                <hr />
                 <li>
                     <dl>
                         <dt>@Html.DisplayNameFor(model => degree.Course)</dt>
@@ -83,6 +85,27 @@
                         <dd>@Html.DisplayFor(model => degree.School)</dd>
                     </dl>
                 </li>                
+            }
+        </ul>
+        <h3>Positions</h3>
+        <ul>
+            @foreach (var position in Model.Positions)
+            {
+                <hr />
+                <li>
+                    <dl>
+                        <dt>@Html.DisplayNameFor(model => position.PositionName)</dt>
+                        <dd>@Html.DisplayFor(model => position.PositionName)</dd>
+                    </dl>
+                    <dl>
+                        <dt>@Html.DisplayNameFor(model => position.Description)</dt>
+                        <dd>@Html.DisplayFor(model => position.Description)</dd>
+                    </dl>
+                    <dl>
+                        <dt>@Html.DisplayNameFor(model => position.HourFee)</dt>
+                        <dd>@Html.DisplayFor(model => position.HourFee)</dd>
+                    </dl>
+                </li>
             }
         </ul>
 
