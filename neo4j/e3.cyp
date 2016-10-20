@@ -30,13 +30,12 @@ CREATE
 (c2)-[:Based{rent:100000,since:1970}]->(VCE),
 
 (f1:Flight{plane:"a38", code:"KLM038"}), (f1)-[:Travels{from:"New York", timeH:14,timeM:30, Distance:10000}]->(AMS),
-(f1)-[:Sells{price:45}]->(KLM),
+(c1)-[:Sells{price:45}]->(f1),
 (f2:Flight{plane:"a39", code:"KLM039"}), (f2)-[:Travels{from:"New York", timeH:18,timeM:30, Distance:10000}]->(VCE),
-(f2)-[:Sells{price:45}]->(KLM),
+(c1)-[:Sells{price:45}]->(f2),
 (f3:Flight{plane:"a40", code:"KLM034"}), (f3)-[:Travels{from:"New York", timeH:14,timeM:45, Distance:10000}]->(AMS),
-(f3)-[:Sells{price:100}]->(KLM),
+(c1)-[:Sells{price:100}]->(f3),
 (f4:Flight{plane:"mm", code:"KLM088"}), (f4)-[:Travels{from:"New York", timeH:11,timeM:30, Distance:10000}]->(VCE),
-(f4)-[:Sells{price:35}]->(KLM),
+(c1)-[:Sells{price:35}]->(f4),
 (f5:Flight{plane:"a3s8", code:"KLM138"}), (f5)-[:Travels{from:"New York", timeH:23,timeM:30, Distance:10000}]->(AMS),
-(f5)-[:Sells{price:50}]->(VCE)
-
+(c2)-[:Sells{price:50}]->(f5)
