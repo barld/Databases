@@ -15,7 +15,6 @@ namespace WebApplication.Controllers
 {
     public class EmployeesController : Controller
     {
-        private WebApplicationContext db = new WebApplicationContext();
         Context context = new Context();
 
         // GET: Employees
@@ -129,7 +128,6 @@ namespace WebApplication.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
             }
             base.Dispose(disposing);
         }
