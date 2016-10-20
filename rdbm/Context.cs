@@ -22,7 +22,7 @@ namespace rdbm
         {
             var connection = new MDFConnection();
 
-            Employees = new EmployeeGateWay(connection);
+            Employees = new EmployeeGateWay(connection, this);
             HeadQuaters = new HeadQuaterGateWay(connection);
         }
     }

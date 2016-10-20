@@ -8,6 +8,19 @@ namespace WebApplication.Models
 {
     public class CreateEmployee
     {
+        public CreateEmployee() { }
+
+        public CreateEmployee(Employee employee)
+        {
+            BSN = employee.BSN;
+            Name = employee.Name;
+            SurName = employee.SurName;
+            BuildingName = employee.BuildingName;
+            Adresses = employee.Adresses.ToList();
+            Adresses.Add(new EmployeeAddress { Address = new Address() });
+            Adresses.Add(new EmployeeAddress { Address = new Address() });
+        }
+
         public int BSN { get; set; }
         public string Name { get; set; }
         public string SurName { get; set; }
@@ -34,7 +47,11 @@ namespace WebApplication.Models
                 a.HouseNumber = a.Address.HouseNumber;
             }
             );
-            emp.Adresses = Adresses.AsEnumerable();
+            emp.Adresses = Adresses
+                .Where(a => 
+                    !string.IsNullOrWhiteSpace(a.PostCode) && 
+                    !string.IsNullOrWhiteSpace(a.Country) && 
+                    !string.IsNullOrWhiteSpace(a.HouseNumber));
 
             return emp;
         }

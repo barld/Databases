@@ -56,29 +56,32 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BSN,Name,SurName,BuildingName")] Employee employee)
+        public ActionResult Create(CreateEmployee cEmployee)
         {
             if (ModelState.IsValid)
             {
+                var employee = cEmployee.toEmployee();
+
                 context.Employees.Add(employee);
                 return RedirectToAction("Index");
             }
             ViewBag.HeadQuaterList = new SelectList(context.HeadQuaters.GetAll().Select(hq => hq.BuildingName));
-            return View(employee);
+            return View(cEmployee);
         }
 
         // GET: Employees/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = await db.Employees.FindAsync(id);
+            var employee =  new CreateEmployee(context.Employees.FindByBSN(id ?? 0));
             if (employee == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.HeadQuaterList = new SelectList(context.HeadQuaters.GetAll().Select(hq => hq.BuildingName));
             return View(employee);
         }
 
@@ -87,14 +90,14 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "BSN,Name,SurName,BuildingName,HeadQuater")] Employee employee)
+        public async Task<ActionResult> Edit(CreateEmployee employee)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(employee).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                context.Employees.Update(employee.toEmployee());
                 return RedirectToAction("Index");
             }
+            ViewBag.HeadQuaterList = new SelectList(context.HeadQuaters.GetAll().Select(hq => hq.BuildingName));
             return View(employee);
         }
 
@@ -116,7 +119,7 @@ namespace WebApplication.Controllers
         // POST: Employees/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int BSN)
+        public ActionResult DeleteConfirmed(int BSN)
         {
             context.Employees.DeleteByBSN(BSN);
             return RedirectToAction("Index");
