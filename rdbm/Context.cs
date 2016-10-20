@@ -11,6 +11,7 @@ namespace rdbm
         EmployeeGateWay Employees { get; }
         HeadQuaterGateWay HeadQuaters { get; }
         DegreesGateWay Degrees { get; }
+        PositionGateWay Positions { get; }
     }
 
 
@@ -19,6 +20,7 @@ namespace rdbm
         public EmployeeGateWay Employees { get; }
         public HeadQuaterGateWay HeadQuaters { get; }
         public DegreesGateWay Degrees { get; }
+        public PositionGateWay Positions { get; }
 
         public Context()
         {
@@ -27,6 +29,7 @@ namespace rdbm
             Employees = new EmployeeGateWay(connection, this);
             HeadQuaters = new HeadQuaterGateWay(connection);
             Degrees = new DegreesGateWay(connection);
+            Positions = new PositionGateWay(connection);
         }
     }
 

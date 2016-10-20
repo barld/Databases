@@ -75,6 +75,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>Employe.mdf</DependentUpon>
     </Content>
+    <Content Include="SQL\TestInsertScript.sql" />
+    <Content Include="SQL\Update1.sql" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
