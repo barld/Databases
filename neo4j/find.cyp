@@ -18,6 +18,19 @@ return T, A, C;
 
 // Q6
 match (A {name:"Venezia Marco Polo"})-[:Includes]->(T:Terminal { code:"B" })
-match (G:Gate)-[:BelongsTo]-(T)
+match (G:Gate {state:"Boarding"})-[:BelongsTo]-(T)
 return A, T, G;
 
+// Q7
+match (A:Airport)-[:LocatedIn]->(C:City {name:"Rome"})
+Match (K:Company)-[:Sells]->(F:Flight)
+match (F)-[:Travels]->(A)
+WHERE K.name = "Lufthansa" OR K.name = "KLM"
+return F.code, F.plane;
+
+// Q8
+match (A:Airport)-[:LocatedIn]->(C:City {name:"Rome"})
+Match (K:Company)-[:Sells]->(F:Flight)
+match (F)-[T:Travels]->(A)
+WHERE T.timeH < 15
+return K.name, count(F)
