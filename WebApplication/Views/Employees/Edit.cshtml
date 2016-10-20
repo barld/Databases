@@ -41,7 +41,7 @@
         </div>
         <hr />
 
-        @for (int i = 0; i < 2; i++)
+        @for (int i = 0; i < Model.Adresses.Count; i++)
         {
             <div class="form-group">
                 @Html.LabelFor(model => model.Adresses[i].Residence, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -84,6 +84,33 @@
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Adresses[i].Address.City, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Adresses[i].Address.City, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+
+        <hr />
+        <h3>degrees</h3>
+        @for (int i = 0; i < Model.Degrees.Count; i++)
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.Degrees[i].Course, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Degrees[i].Course, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Degrees[i].Course, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Degrees[i].Level, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Degrees[i].Level, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Degrees[i].Level, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Degrees[i].School, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Degrees[i].School, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Degrees[i].School, "", new { @class = "text-danger" })
                 </div>
             </div>
         }

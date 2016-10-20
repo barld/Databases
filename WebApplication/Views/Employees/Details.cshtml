@@ -65,10 +65,30 @@
                 </li>
             }
         </ul>
+        <h3>Degrees</h3>
+        <ul>
+            @foreach (var degree in Model.Degrees)
+            {
+                <li>
+                    <dl>
+                        <dt>@Html.DisplayNameFor(model => degree.Course)</dt>
+                        <dd>@Html.DisplayFor(model => degree.Course)</dd>
+                    </dl>
+                    <dl>
+                        <dt>@Html.DisplayNameFor(model => degree.Level)</dt>
+                        <dd>@Html.DisplayFor(model => degree.Level)</dd>
+                    </dl>
+                    <dl>
+                        <dt>@Html.DisplayNameFor(model => degree.School)</dt>
+                        <dd>@Html.DisplayFor(model => degree.School)</dd>
+                    </dl>
+                </li>                
+            }
+        </ul>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.BSN }) |
+    @Html.ActionLink("Edit", "Edit", new { BSN = Model.BSN }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

@@ -19,6 +19,11 @@ namespace WebApplication.Models
             Adresses = employee.Adresses.ToList();
             Adresses.Add(new EmployeeAddress { Address = new Address() });
             Adresses.Add(new EmployeeAddress { Address = new Address() });
+
+            Degrees = employee.Degrees.ToList();
+            Degrees.Add(new Degree());
+            Degrees.Add(new Degree());
+
         }
 
         public int BSN { get; set; }
@@ -30,6 +35,7 @@ namespace WebApplication.Models
         public string BuildingName { get; set; }
 
         public List<EmployeeAddress> Adresses { get; set; }
+        public List<Degree> Degrees { get; set; }
 
         internal Employee toEmployee()
         {
@@ -45,14 +51,22 @@ namespace WebApplication.Models
                 a.Country = a.Address.Country;
                 a.PostCode = a.Address.PostCode;
                 a.HouseNumber = a.Address.HouseNumber;
-            }
-            );
+            });
+            Degrees.ForEach(d =>
+            {
+                d.BSN = emp.BSN;
+            });
+
             emp.Adresses = Adresses
                 .Where(a => 
                     !string.IsNullOrWhiteSpace(a.PostCode) && 
                     !string.IsNullOrWhiteSpace(a.Country) && 
                     !string.IsNullOrWhiteSpace(a.HouseNumber));
-
+            emp.Degrees = Degrees
+                .Where(d =>
+                !string.IsNullOrWhiteSpace(d.Course) &&
+                !string.IsNullOrWhiteSpace(d.Level) &&
+                !string.IsNullOrWhiteSpace(d.School));
             return emp;
         }
     }

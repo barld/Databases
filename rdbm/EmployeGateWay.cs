@@ -65,8 +65,9 @@ namespace rdbm
             do
             {
                 //there is no result
-                if(!reader.IsDBNull(4))
-                    ((List<EmployeeAddress>)emp.Adresses).Add(new EmployeeAddress
+                if (!reader.IsDBNull(4))
+                {
+                    var ea = new EmployeeAddress
                     {
                         BSN = emp.BSN,
                         Residence = reader.GetBoolean(4),
@@ -82,7 +83,9 @@ namespace rdbm
                             City = reader.GetString(8),
                             Street = reader.GetString(9)
                         }
-                    });
+                    };
+                    ((List<EmployeeAddress>)emp.Adresses).Add(ea);
+                }
             }
             while (reader.Read());
 
@@ -105,6 +108,7 @@ namespace rdbm
                     WHERE 
 	                    [Employee].[BSN] = @BSN";
 
+            Employee emp;
             using (var cmd = new SqlCommand(sql, con.connection))
             {
                 cmd.Parameters.Add("@BSN", SqlDbType.Int);
@@ -112,10 +116,12 @@ namespace rdbm
                 using (var reader = cmd.ExecuteReader())
                 {
                     reader.Read();
-                    return fullMap(reader);
+                    emp = fullMap(reader);
                 }
             }
-
+            var degreesGateWay = context.Degrees as DegreesGateWay;
+            emp.Degrees = degreesGateWay.GetAllByBSN(BSN);
+            return emp;
         }
 
         public void Update(Employee employee)
@@ -151,7 +157,9 @@ namespace rdbm
                 cmd.ExecuteNonQuery();
             }
 
-            CreateEmployeeAdresses(employee);
+            createEmployeeAdresses(employee);
+            context.Degrees.DeleteByBSN(employee.BSN);
+            createDegrees(employee);
         }
 
         public void addHQ(HeadQuater hq)
@@ -204,11 +212,20 @@ namespace rdbm
                 cmd.ExecuteNonQuery();
             }
 
-            CreateEmployeeAdresses(employee);
+            createEmployeeAdresses(employee);
+            createDegrees(employee);
 
         }
 
-        private void CreateEmployeeAdresses(Employee employee)
+        private void createDegrees(Employee employee)
+        {
+            foreach(var degree in employee.Degrees)
+            {
+                context.Degrees.Add(degree);
+            }
+        }
+
+        private void createEmployeeAdresses(Employee employee)
         {
             var rdbmHeadQuaterGateWay = context.HeadQuaters as HeadQuaterGateWay;
             foreach (var ea in employee.Adresses)

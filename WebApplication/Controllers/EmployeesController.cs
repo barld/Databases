@@ -69,13 +69,13 @@ namespace WebApplication.Controllers
         }
 
         // GET: Employees/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? BSN)
         {
-            if (id == null)
+            if (BSN == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var employee =  new CreateEmployee(context.Employees.FindByBSN(id ?? 0));
+            var employee =  new CreateEmployee(context.Employees.FindByBSN(BSN ?? 0));
             if (employee == null)
             {
                 return HttpNotFound();
