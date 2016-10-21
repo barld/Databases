@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace rdbm
 {
-    public interface IContext
+    public interface IContext: IDisposable
     {
         EmployeeGateWay Employees { get; }
         HeadQuaterGateWay HeadQuaters { get; }
@@ -16,7 +16,7 @@ namespace rdbm
     }
 
 
-    public class Context : IContext, IDisposable
+    public class Context : IContext
     {
         public EmployeeGateWay Employees { get; }
         public HeadQuaterGateWay HeadQuaters { get; }

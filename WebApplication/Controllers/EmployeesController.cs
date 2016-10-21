@@ -15,7 +15,7 @@ namespace WebApplication.Controllers
 {
     public class EmployeesController : Controller
     {
-        Context context = new Context();
+        IContext context = new Context();
 
         // GET: Employees
         public ActionResult Index()

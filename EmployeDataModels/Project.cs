@@ -1,7 +1,10 @@
-﻿namespace EmployeDataModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace EmployeDataModels
 {
     public class Project
     {
+        [Key]
         public int ProjectID { get; set; }
         public string Name { get; set; }
         public float Budget { get; set; }
