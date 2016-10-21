@@ -15,10 +15,10 @@ namespace WebApplication.Models
             this.BuildingName = headquarter.BuildingName;
             this.Rooms = headquarter.Rooms;
             this.Rent = headquarter.Rent;
-            this.PostCode = headquarter.PostCode;
-            this.HouseNumber = headquarter.HouseNumber;
-            this.Country = headquarter.Country;
-            this.Address = new Address();
+            this.PostCode = headquarter.Address.PostCode;
+            this.HouseNumber = headquarter.Address.HouseNumber;
+            this.Country = headquarter.Address.Country;
+            this.Address = headquarter.Address;
         }
 
         public string BuildingName { get; set; }
@@ -52,9 +52,10 @@ namespace WebApplication.Models
                 BuildingName = BuildingName,
                 Rooms = Rooms,
                 Rent = Rent,
-                Country = Country,
-                PostCode = PostCode,
-                HouseNumber = HouseNumber
+                Country = Address.Country,
+                PostCode = Address.PostCode,
+                HouseNumber = Address.HouseNumber,
+                Address = Address
             };
             return hq;
         }

@@ -71,12 +71,12 @@ namespace WebApplication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            HeadQuater headQuater = context.HeadQuaters.FindByBuildingname(buildingName);
-            if (headQuater == null)
+            var headquarter = new CreateHeadQuarters(context.HeadQuaters.FindByBuildingname(buildingName));
+            if (headquarter == null)
             {
                 return HttpNotFound();
             }
-            return View(headQuater);
+            return View(headquarter);
         }
 
         // POST: HeadQuaters/Edit/5

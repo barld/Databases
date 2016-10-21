@@ -29,7 +29,9 @@ namespace EmployeDataModels
         /// <summary>
         /// fk: address
         /// </summary>
-        public string HouseNumber { get; set; }
+        public string HouseNumber { get; set; } 
+
+        public Address Address { get; set; }
 
     }
 }
