@@ -1,12 +1,9 @@
-﻿@model EmployeDataModels.Project
-
+﻿@model rdbm.ProjectManagment
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Manage";
 }
 
-<h2>Details</h2>
-
-
+<h2>Manage</h2>
 
 <div>
     <h4>Project</h4>
@@ -46,7 +43,24 @@
 
     </dl>
 </div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ProjectID)
+    foreach (var d in Model.Data)
+    {
+        @Html.HiddenFor(model => d.Position.BSN)
+        @Html.HiddenFor(model => d.Position.PositionName)
+        @Html.LabelFor(model => d.Assignd, $"{d.Employee.Name} {d.Employee.SurName} - {d.Position.PositionName}")
+        @Html.EditorFor(model => d.Assignd)
+
+    }
+
+}
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ProjectID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+

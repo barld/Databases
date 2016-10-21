@@ -118,5 +118,60 @@ namespace rdbm
                 cmd.ExecuteNonQuery();
             }
         }
+
+        //costom handlers for project managment
+        public IEnumerable<ManagmentData> GetManageDataProject(int id)
+        {
+            Func<SqlDataReader, ManagmentData> map = reader =>
+             {
+                 return new ManagmentData
+                 {
+                     Employee = new Employee { BSN = reader.GetInt32(0), Name = reader.GetString(1), SurName = reader.GetString(2), BuildingName = reader.GetString(3)},
+                     Position = new Position { PositionName = reader.GetString(4), Description=reader.GetString(5), HourFee = (float)reader.GetSqlMoney(6).ToDouble(), BSN = reader.GetInt32(7)},
+                     Assignd = reader.GetInt32(8)==1
+                 };
+             };
+
+            if (con.connection.State != ConnectionState.Open)
+                con.connection.Open();
+            var sql = @"
+SELECT 
+	*, 
+	(
+        SELECT COUNT(*) FROM [ProjectPosition] 
+        WHERE [ProjectPosition].PositionName = [Position].PositionName AND [ProjectPosition].BSN = [Position].BSN AND [ProjectPosition].ProjectID = @id
+    )
+    as selected
+FROM [Employee], [Position]
+WHERE Position.BSN = Employee.BSN;";
+            using (var cmd = new SqlCommand(sql, con.connection))
+            {
+                cmd.Parameters.Add("@id", SqlDbType.Int);
+                cmd.Parameters["@id"].Value = id;
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                        yield return map(reader);
+                }
+
+            }
+        }
+    }
+
+    public class ProjectManagment : Project
+    {
+        public ProjectManagment(IEnumerable<ManagmentData> data)
+        {
+            Data = data.ToList();
+        }
+        public List<ManagmentData> Data { get; set; }
+    }
+
+    public class ManagmentData
+    {
+        public int ID { get; set; }
+        public Employee Employee { get; set; }
+        public Position Position { get; set; }
+        public bool Assignd { get; set; }
     }
 }

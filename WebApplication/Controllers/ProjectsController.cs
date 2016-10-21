@@ -20,8 +20,7 @@ namespace WebApplication.Controllers
         // GET: Projects
         public ActionResult Index()
         {
-            //return View(context.Projects.GetAll());
-            return View(context.HeadQuaters.GetAll());
+            return View(context.Projects.GetAll());
         }
 
 
@@ -94,6 +93,30 @@ namespace WebApplication.Controllers
             }
             ViewBag.HeadQuaterList = new SelectList(context.HeadQuaters.GetAll().Select(hq => hq.BuildingName));
             return View(project);
+        }
+
+        [Route("Projects/{id}/Manage")]
+        public ActionResult Manage(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var project = context.Projects.FindByProjectId(id ?? 0);
+            if (project == null)
+            {
+                return HttpNotFound();
+            }
+            var data = context.Projects.GetManageDataProject(id ?? 0);
+            var pData = new ProjectManagment(data)
+            {
+                Budget = project.Budget,
+                BuildingName = project.BuildingName,
+                Hours = project.Hours,
+                Name = project.Name,
+                ProjectID = project.ProjectID
+            };
+            return View(pData);
         }
 
         // GET: Projects/Delete/5
