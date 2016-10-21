@@ -20,5 +20,8 @@ namespace WebApplication.Models
         }
 
         public System.Data.Entity.DbSet<EmployeDataModels.Employee> Employees { get; set; }
+        public System.Data.Entity.DbSet<EmployeDataModels.HeadQuater> HeadQuarters { get; set; }
+
+
     }
 }

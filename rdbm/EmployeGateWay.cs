@@ -28,7 +28,6 @@ namespace rdbm
                 Name = reader.GetString(1),
                 SurName = reader.GetString(2),
                 BuildingName = reader.GetString(3)
-                
             };
         }
 
@@ -162,17 +161,6 @@ namespace rdbm
             createDegrees(employee);
         }
 
-        public void addHQ(HeadQuater hq)
-        {
-            if (con.connection.State != ConnectionState.Open)
-                con.connection.Open();
-
-            using (var cmd = new SqlCommand(string.Format("INSERT INTO [HeadQuater] values ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}')", 
-                hq.BuildingName, hq.Rooms, hq.Rent, hq.Country, hq.PostCode, hq.HouseNumber), con.connection))
-            {
-                cmd.ExecuteNonQuery();
-            }
-        }
 
         public void addADR(Address adr)
         {

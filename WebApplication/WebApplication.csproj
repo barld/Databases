@@ -129,11 +129,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
+    <Compile Include="Controllers\HeadQuatersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CreateEmployee.cs" />
+    <Compile Include="Models\CreateHeadQuarters.cs" />
     <Compile Include="Models\WebApplicationContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -177,6 +179,11 @@
     <Content Include="Views\Employees\Details.cshtml" />
     <Content Include="Views\Employees\Edit.cshtml" />
     <Content Include="Views\Employees\Index.cshtml" />
+    <Content Include="Views\HeadQuaters\Create.cshtml" />
+    <Content Include="Views\HeadQuaters\Delete.cshtml" />
+    <Content Include="Views\HeadQuaters\Details.cshtml" />
+    <Content Include="Views\HeadQuaters\Edit.cshtml" />
+    <Content Include="Views\HeadQuaters\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

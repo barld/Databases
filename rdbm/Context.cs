@@ -23,7 +23,6 @@ namespace rdbm
         public Context()
         {
             var connection = new MDFConnection();
-
             Employees = new EmployeeGateWay(connection, this);
             HeadQuaters = new HeadQuaterGateWay(connection);
             Degrees = new DegreesGateWay(connection);
