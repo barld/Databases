@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace rdbm
 {
-    public class MDFConnection
+    public class MDFConnection : IDisposable
     {
         public SqlConnection connection { get; }
 
@@ -23,5 +23,10 @@ namespace rdbm
         }
 
         public MDFConnection() : this(System.IO.Path.Combine(AppDomain.CurrentDomain.RelativeSearchPath.Replace("WebApplication\\bin",""), @"rdbm\Employe.mdf")) { }
+
+        public void Dispose()
+        {
+            connection.Dispose();
+        }
     }
 }

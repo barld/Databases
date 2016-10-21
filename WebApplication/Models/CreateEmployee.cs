@@ -24,6 +24,10 @@ namespace WebApplication.Models
             Degrees.Add(new Degree());
             Degrees.Add(new Degree());
 
+            Positions = employee.Positions.ToList();
+            Positions.Add(new Position());
+            Positions.Add(new Position());
+
         }
 
         public int BSN { get; set; }

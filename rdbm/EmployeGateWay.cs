@@ -161,6 +161,8 @@ namespace rdbm
             createEmployeeAdresses(employee);
             context.Degrees.DeleteByBSN(employee.BSN);
             createDegrees(employee);
+            context.Positions.DeleteFromBSN(employee.BSN);
+            createPositions(employee);
         }
 
         public void addHQ(HeadQuater hq)
@@ -215,7 +217,14 @@ namespace rdbm
 
             createEmployeeAdresses(employee);
             createDegrees(employee);
+            createPositions(employee);
 
+        }
+
+        private void createPositions(Employee employee)
+        {
+            foreach (var position in employee.Positions)
+                context.Positions.Add(position);
         }
 
         private void createDegrees(Employee employee)
@@ -228,7 +237,7 @@ namespace rdbm
 
         private void createEmployeeAdresses(Employee employee)
         {
-            var rdbmHeadQuaterGateWay = context.HeadQuaters as HeadQuaterGateWay;
+            var rdbmHeadQuaterGateWay = context.Addresses as AddressGateWay;
             foreach (var ea in employee.Adresses)
             {
                 rdbmHeadQuaterGateWay.AddIfNotExists(ea.Address);
