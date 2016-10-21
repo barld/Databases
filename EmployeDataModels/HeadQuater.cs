@@ -1,11 +1,17 @@
-﻿namespace EmployeDataModels
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace EmployeDataModels
 {
     public class HeadQuater
     {
         /// <summary>
         /// pk
         /// </summary>
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string BuildingName { get; set; }
+
         /// <summary>
         /// count of rooms in the building
         /// </summary>
@@ -24,5 +30,6 @@
         /// fk: address
         /// </summary>
         public string HouseNumber { get; set; }
+
     }
 }
