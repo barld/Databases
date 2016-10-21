@@ -15,7 +15,6 @@ namespace WebApplication.Controllers
 {
     public class ProjectsController : Controller
     {
-        private WebApplicationContext db = new WebApplicationContext();
         private IContext context = new Context();
 
         // GET: Projects
@@ -25,13 +24,13 @@ namespace WebApplication.Controllers
         }
 
         // GET: Projects/Details/5
-        public async Task<ActionResult> Details(int? id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = await db.Projects.FindAsync(id);
+            Project project = context.Projects.FindByProjectId(id ?? 0);
             if (project == null)
             {
                 return HttpNotFound();
@@ -64,17 +63,18 @@ namespace WebApplication.Controllers
         }
 
         // GET: Projects/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = await db.Projects.FindAsync(id);
+            Project project = context.Projects.FindByProjectId(id??0);
             if (project == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.HeadQuaterList = new SelectList(context.HeadQuaters.GetAll().Select(hq => hq.BuildingName));
             return View(project);
         }
 
@@ -83,25 +83,25 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ProjectID,Name,Budget,Hours,BuildingName,HeadQuater")] Project project)
+        public ActionResult Edit(Project project)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(project).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                context.Projects.Update(project);
                 return RedirectToAction("Index");
             }
+            ViewBag.HeadQuaterList = new SelectList(context.HeadQuaters.GetAll().Select(hq => hq.BuildingName));
             return View(project);
         }
 
         // GET: Projects/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = await db.Projects.FindAsync(id);
+            Project project = context.Projects.FindByProjectId(id ?? 0);
             if (project == null)
             {
                 return HttpNotFound();
@@ -112,11 +112,9 @@ namespace WebApplication.Controllers
         // POST: Projects/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            Project project = await db.Projects.FindAsync(id);
-            db.Projects.Remove(project);
-            await db.SaveChangesAsync();
+            context.Projects.DeleteById(id);
             return RedirectToAction("Index");
         }
 
@@ -124,7 +122,6 @@ namespace WebApplication.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
                 context.Dispose();
             }
             base.Dispose(disposing);
