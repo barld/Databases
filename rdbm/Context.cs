@@ -13,6 +13,7 @@ namespace rdbm
         DegreesGateWay Degrees { get; }
         PositionGateWay Positions { get; }
         AddressGateWay Addresses { get; }
+        ProjectGateWay Projects { get; }
     }
 
 
@@ -23,6 +24,7 @@ namespace rdbm
         public DegreesGateWay Degrees { get; }
         public PositionGateWay Positions { get; }
         public AddressGateWay Addresses { get; }
+        public ProjectGateWay Projects { get; }
 
         public Context()
         {
@@ -33,6 +35,7 @@ namespace rdbm
             Degrees = new DegreesGateWay(connection);
             Positions = new PositionGateWay(connection);
             Addresses = new AddressGateWay(connection);
+            Projects = new ProjectGateWay(connection);
         }
 
         #region IDisposable Support

@@ -44,6 +44,7 @@ namespace WebApplication.Controllers
         // GET: Projects/Create
         public ActionResult Create()
         {
+            ViewBag.HeadQuaterList = new SelectList(context.HeadQuaters.GetAll().Select(hq => hq.BuildingName));
             return View();
         }
 
@@ -52,15 +53,15 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ProjectID,Name,Budget,Hours,BuildingName,HeadQuater")] Project project)
+        public ActionResult Create(Project project)
         {
             if (ModelState.IsValid)
             {
-                db.Projects.Add(project);
-                await db.SaveChangesAsync();
+                context.Projects.Add(project);
                 return RedirectToAction("Index");
             }
 
+            ViewBag.HeadQuaterList = new SelectList(context.HeadQuaters.GetAll().Select(hq => hq.BuildingName));
             return View(project);
         }
 
