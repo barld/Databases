@@ -20,8 +20,10 @@ namespace WebApplication.Controllers
         // GET: Projects
         public ActionResult Index()
         {
-            return View(context.Projects.GetAll());
+            //return View(context.Projects.GetAll());
+            return View(context.HeadQuaters.GetAll());
         }
+
 
         // GET: Projects/Details/5
         public ActionResult Details(int? id)

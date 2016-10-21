@@ -12,10 +12,12 @@ namespace rdbm
     public class HeadQuaterGateWay
     {
         private readonly MDFConnection con;
+        private readonly IContext context;
 
-        public HeadQuaterGateWay(MDFConnection connection)
+        public HeadQuaterGateWay(MDFConnection connection, IContext context)
         {
             con = connection;
+            this.context = context;
         }
 
         public IEnumerable<HeadQuater> GetAll()
@@ -42,7 +44,28 @@ namespace rdbm
                 Rent = (float)reader.GetSqlMoney(2).ToDouble(),
                 Country = reader.GetString(3),
                 PostCode = reader.GetString(4),
-                HouseNumber = reader.GetString(5)
+                HouseNumber = reader.GetString(5),
+            };
+        }
+
+        private HeadQuater fullMap(SqlDataReader reader)
+        {
+            return new HeadQuater
+            {
+                BuildingName = reader.GetString(0),
+                Rooms = reader.GetInt32(1),
+                Rent = (float)reader.GetSqlMoney(2).ToDouble(),
+                Country = reader.GetString(3),
+                PostCode = reader.GetString(4),
+                HouseNumber = reader.GetString(5),
+                Address = new Address
+                {
+                    Country = reader.GetString(3),
+                    PostCode = reader.GetString(4),
+                    HouseNumber = reader.GetString(5),
+                    City = reader.GetString(9),
+                    Street = reader.GetString(10)
+                }
             };
         }
 
@@ -91,7 +114,7 @@ namespace rdbm
                 using (var reader = cmd.ExecuteReader())
                 {
                     reader.Read();
-                    HQ = map(reader);
+                    HQ = fullMap(reader);
                 }
 
             }
@@ -114,20 +137,36 @@ namespace rdbm
             }
         }
 
-        public void Add(HeadQuater hq)
+        public void Add(HeadQuater headquarter)
         {
             if (con.connection.State != ConnectionState.Open)
                 con.connection.Open();
 
-            using (var cmd = new SqlCommand(string.Format(
-                "INSERT INTO [HeadQuater] values ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}')",
-                    hq.BuildingName,
-                    hq.Rooms, 
-                    hq.Rent, 
-                    hq.Country, 
-                    hq.PostCode, 
-                    hq.HouseNumber), con.connection))
+            context.Addresses.AddIfNotExists(headquarter.Address);
+
+            var sql = @"INSERT INTO [HeadQuater] 
+                        VALUES (@buildingname, @rooms, @rent, @country, @postcode, @housenumber)";
+
+            using (var cmd = new SqlCommand(sql, con.connection))
             {
+                cmd.Parameters.Add("@buildingname", SqlDbType.VarChar);
+                cmd.Parameters["@buildingname"].Value = headquarter.BuildingName;
+
+                cmd.Parameters.Add("@rooms", SqlDbType.Int);
+                cmd.Parameters["@rooms"].Value = headquarter.Rooms;
+
+                cmd.Parameters.Add("@rent", SqlDbType.Money);
+                cmd.Parameters["@rent"].Value = headquarter.Rent;
+
+                cmd.Parameters.Add("@country", SqlDbType.VarChar);
+                cmd.Parameters["@country"].Value = headquarter.Country;
+
+                cmd.Parameters.Add("@postcode", SqlDbType.VarChar);
+                cmd.Parameters["@postcode"].Value = headquarter.PostCode;
+
+                cmd.Parameters.Add("@housenumber", SqlDbType.VarChar);
+                cmd.Parameters["@housenumber"].Value = headquarter.HouseNumber;
+
                 cmd.ExecuteNonQuery();
             }
         }
@@ -167,37 +206,6 @@ namespace rdbm
                 cmd.Parameters["@housenumber"].Value = headquarter.HouseNumber;
 
                 cmd.ExecuteNonQuery();
-            }
-        }
-
-
-        public void AddIfNotExists(Address address)
-        {
-            if (Exists(address))
-                return;
-            else
-            {
-                var sql = @"INSERT INTO [Address] (Country,PostCode,HouseNumber,City,Street) VALUES
-                        (@country, @postCode, @houseNumber, @city, @Street)";
-                using(var cmd = new SqlCommand(sql, con.connection))
-                {
-                    cmd.Parameters.Add("@country", SqlDbType.VarChar);
-                    cmd.Parameters["@country"].Value = address.Country;
-
-                    cmd.Parameters.Add("@postCode", SqlDbType.VarChar);
-                    cmd.Parameters["@postCode"].Value = address.PostCode;
-
-                    cmd.Parameters.Add("@houseNumber", SqlDbType.VarChar);
-                    cmd.Parameters["@houseNumber"].Value = address.HouseNumber;
-
-                    cmd.Parameters.Add("@city", SqlDbType.VarChar);
-                    cmd.Parameters["@city"].Value = address.City;
-
-                    cmd.Parameters.Add("@street", SqlDbType.VarChar);
-                    cmd.Parameters["@street"].Value = address.Street;
-
-                    cmd.ExecuteNonQuery();
-                }
             }
         }
     }

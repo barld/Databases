@@ -31,7 +31,7 @@ namespace rdbm
             connection = new MDFConnection();
 
             Employees = new EmployeeGateWay(connection, this);
-            HeadQuaters = new HeadQuaterGateWay(connection);
+            HeadQuaters = new HeadQuaterGateWay(connection, this);
             Degrees = new DegreesGateWay(connection);
             Positions = new PositionGateWay(connection);
             Addresses = new AddressGateWay(connection);
