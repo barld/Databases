@@ -120,6 +120,7 @@ namespace rdbm
             }
             var degreesGateWay = context.Degrees as DegreesGateWay;
             emp.Degrees = degreesGateWay.GetAllByBSN(BSN);
+            emp.Positions = context.Positions.GetAllByBSN(BSN);
             return emp;
         }
 
@@ -159,6 +160,8 @@ namespace rdbm
             createEmployeeAdresses(employee);
             context.Degrees.DeleteByBSN(employee.BSN);
             createDegrees(employee);
+            context.Positions.DeleteFromBSN(employee.BSN);
+            createPositions(employee);
         }
 
 
@@ -202,7 +205,14 @@ namespace rdbm
 
             createEmployeeAdresses(employee);
             createDegrees(employee);
+            createPositions(employee);
 
+        }
+
+        private void createPositions(Employee employee)
+        {
+            foreach (var position in employee.Positions)
+                context.Positions.Add(position);
         }
 
         private void createDegrees(Employee employee)
@@ -215,7 +225,7 @@ namespace rdbm
 
         private void createEmployeeAdresses(Employee employee)
         {
-            var rdbmHeadQuaterGateWay = context.HeadQuaters as HeadQuaterGateWay;
+            var rdbmHeadQuaterGateWay = context.Addresses as AddressGateWay;
             foreach (var ea in employee.Adresses)
             {
                 rdbmHeadQuaterGateWay.AddIfNotExists(ea.Address);

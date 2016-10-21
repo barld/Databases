@@ -25,5 +25,6 @@ namespace EmployeDataModels
 
         public virtual IEnumerable<Degree> Degrees { get; set; }
         public virtual IEnumerable<EmployeeAddress> Adresses { get; set; }
+        public virtual IEnumerable<Position> Positions { get; set; }
     }
 }
