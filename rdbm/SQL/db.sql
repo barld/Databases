@@ -68,7 +68,7 @@ CREATE TABLE Position(
     HourFee money NOT NULL,
     BSN int NOT NULL,
     CONSTRAINT Employee_Position FOREIGN KEY (BSN) REFERENCES Employee (BSN) ON DELETE CASCADE,
-	PRIMARY KEY (BSN, PositionName, ProjectID)
+	PRIMARY KEY (BSN, PositionName)
 );
 
 CREATE TABLE [dbo].[ProjectPosition] (
