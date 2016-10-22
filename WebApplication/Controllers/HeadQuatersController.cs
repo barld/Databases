@@ -83,6 +83,7 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("HeadQuaters/Edit/{buildingName}")]
         public ActionResult Edit(CreateHeadQuarters cHeadquarters)
         {
             if (ModelState.IsValid)
@@ -94,6 +95,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: HeadQuaters/Delete/5
+        [Route("HeadQuaters/Delete/{buildingName}")]
         public ActionResult Delete(string buildingName)
         {
             if (buildingName == null)
@@ -111,6 +113,7 @@ namespace WebApplication.Controllers
         // POST: HeadQuaters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Route("HeadQuaters/Delete/{buildingName}")]
         public ActionResult DeleteConfirmed(string buildingName)
         {
             context.HeadQuaters.DeleteByBuildingname(buildingName);

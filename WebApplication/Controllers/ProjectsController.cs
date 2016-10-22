@@ -35,6 +35,8 @@ namespace WebApplication.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.CanPay = context.Projects.CanPay(project) ? "True" : "False";
             return View(project);
         }
 
