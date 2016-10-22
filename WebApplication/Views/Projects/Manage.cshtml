@@ -48,14 +48,21 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.ProjectID)
-    foreach (var d in Model.Data)
-    {
-        @Html.HiddenFor(model => d.Position.BSN)
-        @Html.HiddenFor(model => d.Position.PositionName)
-        @Html.LabelFor(model => d.Assignd, $"{d.Employee.Name} {d.Employee.SurName} - {d.Position.PositionName}")
-        @Html.EditorFor(model => d.Assignd)
 
+    for (int i = 0; i < Model.Data.Count; i++)
+    {
+        <div class="form-group">
+            @Html.HiddenFor(model => model.Data[i].Employee.BSN)
+            @Html.HiddenFor(model => model.Data[i].Position.PositionName)
+            @Html.LabelFor(model => model.Data[i].Assignd, $"{Model.Data[i].Employee.Name} {Model.Data[i].Employee.SurName} - {Model.Data[i].Position.PositionName}")
+            @Html.EditorFor(model => model.Data[i].Assignd)
+        </div>
     }
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
 
 }
 

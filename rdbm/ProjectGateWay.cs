@@ -98,8 +98,8 @@ namespace rdbm
                 cmd.Parameters["@hours"].Value = project.Hours;
                 cmd.Parameters.Add("@bName", SqlDbType.VarChar);
                 cmd.Parameters["@bName"].Value = project.BuildingName;
-                cmd.Parameters.Add("@id", SqlDbType.Int);
-                cmd.Parameters["@id"].Value = project.ProjectID;
+                cmd.Parameters.Add("@pid", SqlDbType.Int);
+                cmd.Parameters["@pid"].Value = project.ProjectID;
 
                 cmd.ExecuteNonQuery();
             }
@@ -120,6 +120,40 @@ namespace rdbm
         }
 
         //costom handlers for project managment
+
+        public void UpdateState(ProjectManagment pm)
+        {
+            // 1. drop all ProjectPositions for project
+            // 2. INSERT all project positions for project
+            if (con.connection.State != ConnectionState.Open)
+                con.connection.Open();
+
+            const string dropSql = @"DELETE FROM [ProjectPosition] WHERE ProjectID = @pid;";
+            using (var cmd = new SqlCommand(dropSql, con.connection))
+            {
+                cmd.Parameters.Add("@pid", SqlDbType.Int);
+                cmd.Parameters["@pid"].Value = pm.ProjectID;
+
+                cmd.ExecuteNonQuery();
+            }
+            foreach(var d in pm.Data)
+            {
+                const string sql = @"INSERT INTO [ProjectPosition] VALUES (@pname, @BSN, @pid);";
+                using(var cmd = new SqlCommand(sql, con.connection))
+                {
+                    cmd.Parameters.Add("@pname", SqlDbType.VarChar);
+                    cmd.Parameters["@pname"].Value = d.Position.PositionName;
+                    cmd.Parameters.Add("@BSN", SqlDbType.Int);
+                    cmd.Parameters["@BSN"].Value = d.Employee.BSN;
+                    cmd.Parameters.Add("@pid", SqlDbType.Int);
+                    cmd.Parameters["@pid"].Value = pm.ProjectID;
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        
         public IEnumerable<ManagmentData> GetManageDataProject(int id)
         {
             Func<SqlDataReader, ManagmentData> map = reader =>
@@ -160,6 +194,10 @@ WHERE Position.BSN = Employee.BSN;";
 
     public class ProjectManagment : Project
     {
+        public ProjectManagment()
+        {
+            Data = new List<ManagmentData>();
+        }
         public ProjectManagment(IEnumerable<ManagmentData> data)
         {
             Data = data.ToList();
@@ -169,7 +207,6 @@ WHERE Position.BSN = Employee.BSN;";
 
     public class ManagmentData
     {
-        public int ID { get; set; }
         public Employee Employee { get; set; }
         public Position Position { get; set; }
         public bool Assignd { get; set; }

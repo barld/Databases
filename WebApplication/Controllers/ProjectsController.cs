@@ -95,7 +95,7 @@ namespace WebApplication.Controllers
             return View(project);
         }
 
-        [Route("Projects/{id}/Manage")]
+
         public ActionResult Manage(int? id)
         {
             if (id == null)
@@ -118,6 +118,19 @@ namespace WebApplication.Controllers
             };
             return View(pData);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Manage(ProjectManagment pm)
+        {
+            if (ModelState.IsValid)
+            {
+                context.Projects.UpdateState(pm);
+                return RedirectToAction("Index");
+            }
+            return Manage(pm.ProjectID);
+        }
+
 
         // GET: Projects/Delete/5
         public ActionResult Delete(int? id)
