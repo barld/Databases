@@ -35,7 +35,7 @@ namespace rdbm
             Degrees = new DegreesGateWay(connection);
             Positions = new PositionGateWay(connection);
             Addresses = new AddressGateWay(connection);
-            Projects = new ProjectGateWay(connection);
+            Projects = new ProjectGateWay(connection, this);
         }
 
         #region IDisposable Support
