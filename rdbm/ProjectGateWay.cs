@@ -25,7 +25,18 @@ namespace rdbm
         {
             if (con.connection.State != ConnectionState.Open)
                 con.connection.Open();
-            var sql = @"SELECT * FROM [Project];";
+            var sql = @"SELECT 
+	            [Project].*, 
+	             Rent.RentPerProject / [project].Budget AS RentPart
+            FROM 
+	            [Project],
+	            (
+		            SELECT [HeadQuater].BuildingName, [HeadQuater].Rent/Count(*) AS RentPerProject
+		            FROM [Project], [HeadQuater]
+		            WHERE [Project].BuildingName = [HeadQuater].BuildingName
+		            GROUP BY [HeadQuater].BuildingName, [HeadQuater].Rent
+	            ) AS Rent
+            WHERE [Project].BuildingName = Rent.BuildingName;";
             using (var cmd = new SqlCommand(sql, con.connection))
             {
                 using (var reader = cmd.ExecuteReader())
@@ -42,42 +53,10 @@ namespace rdbm
                 Name = reader.GetString(1),
                 Budget = (float)reader.GetSqlMoney(2).ToDouble(),
                 Hours = reader.GetInt32(3),
-                BuildingName = reader.GetString(4)
+                BuildingName = reader.GetString(4),
+                RentePart = (double) reader.GetDecimal(5),
+                CanPayRent = (double) reader.GetDecimal(5) < 0.1,
             };
-        }
-
-        public bool CanPay(Project project)
-        {
-            if (con.connection.State != ConnectionState.Open)
-                con.connection.Open();
-
-            var sql = @"SELECT 
-	            [Project].*, 
-	             Rent.RentPerProject / [project].Budget AS RentPercentage
-            FROM 
-	            [Project],
-	            (
-		            SELECT [HeadQuater].BuildingName, [HeadQuater].Rent/Count(*) AS RentPerProject
-		            FROM [Project], [HeadQuater]
-		            WHERE [Project].BuildingName = [HeadQuater].BuildingName
-		            GROUP BY [HeadQuater].BuildingName, [HeadQuater].Rent
-	            ) AS Rent
-            WHERE [Project].BuildingName = Rent.BuildingName AND [Project].ProjectID = @projectid;";
-
-            decimal rentpercentage = 0;
-            using (var cmd = new SqlCommand(sql, con.connection))
-            {
-                cmd.Parameters.Add("@projectid", SqlDbType.Int);
-                cmd.Parameters["@projectid"].Value = project.ProjectID;
-                using (var reader = cmd.ExecuteReader())
-                {
-
-                    while (reader.Read())
-                        return (float)reader.GetDecimal(5) * 100 < project.Budget;
-                }
-
-            }
-            return false;
         }
 
         public void Add(Project project)
@@ -105,7 +84,18 @@ namespace rdbm
         {
             if (con.connection.State != ConnectionState.Open)
                 con.connection.Open();
-            var sql = @"SELECT TOP 1 * FROM [Project] WHERE ProjectID = @id;";
+            var sql = @"SELECT 
+	            [Project].*, 
+	             Rent.RentPerProject / [project].Budget AS RentPercentage
+            FROM 
+	            [Project],
+	            (
+		            SELECT [HeadQuater].BuildingName, [HeadQuater].Rent/Count(*) AS RentPerProject
+		            FROM [Project], [HeadQuater]
+		            WHERE [Project].BuildingName = [HeadQuater].BuildingName
+		            GROUP BY [HeadQuater].BuildingName, [HeadQuater].Rent
+	            ) AS Rent
+            WHERE [Project].BuildingName = Rent.BuildingName AND [Project].ProjectID = @id;";
             using (var cmd = new SqlCommand(sql, con.connection))
             {
                 cmd.Parameters.Add("@id", SqlDbType.Int);

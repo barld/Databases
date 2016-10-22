@@ -13,5 +13,7 @@ namespace EmployeDataModels
         public string BuildingName { get; set; }
 
         public HeadQuater HeadQuater { get; set; }
+        public double RentePart { get; set; }
+        public bool CanPayRent { get; set; }
     }
 }

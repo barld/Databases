@@ -37,12 +37,10 @@ CREATE TABLE EmployeeAddress
         PostCode VARCHAR(10) NOT NUll,
         HouseNumber VARCHAR(10) NOT NUll,
         Residence BIT NOT NULL,
-        CONSTRAINT Employee_EmployeeAddress FOREIGN KEY (BSN) REFERENCES Employee (BSN),
+        CONSTRAINT Employee_EmployeeAddress FOREIGN KEY (BSN) REFERENCES Employee (BSN) ON DELETE CASCADE,
         CONSTRAINT Address_EmployeeAddress FOREIGN KEY (Country, PostCode, HouseNumber) REFERENCES Address (Country,PostCode,HouseNumber),
         CONSTRAINT EmployeeAddress_PK PRIMARY KEY  (BSN, Country, PostCode, HouseNumber)
     );
-
---choose key
 
 CREATE TABLE Degree
     (
@@ -50,7 +48,7 @@ CREATE TABLE Degree
         School VARCHAR(150) NOT NUll,
         Level VARCHAR(100) NOT NULL,
         BSN int Not NULL,
-        CONSTRAINT Employee_Degree FOREIGN KEY (BSN) REFERENCES Employee (BSN)
+        CONSTRAINT Employee_Degree FOREIGN KEY (BSN) REFERENCES Employee (BSN) ON DELETE CASCADE
     );
 
 
@@ -69,11 +67,17 @@ CREATE TABLE Position(
     Description TEXT,
     HourFee money NOT NULL,
     BSN int NOT NULL,
-	ProjectID int,
-    CONSTRAINT Employee_Position FOREIGN KEY (BSN) REFERENCES Employee (BSN),
-	CONSTRAINT Project_Position FOREIGN KEY (ProjectID) REFERENCES Project (ProjectID),
+    CONSTRAINT Employee_Position FOREIGN KEY (BSN) REFERENCES Employee (BSN) ON DELETE CASCADE,
 	PRIMARY KEY (BSN, PositionName, ProjectID)
 );
 
+CREATE TABLE [dbo].[ProjectPosition] (
+    [PositionName] VARCHAR (100) NOT NULL,
+    [BSN]          INT           NOT NULL,
+    [ProjectID]    INT           NOT NULL,
+    PRIMARY KEY CLUSTERED ([BSN] ASC, [PositionName] ASC, [ProjectID] ASC),
+    CONSTRAINT [ProjectPosition_Project] FOREIGN KEY ([ProjectID]) REFERENCES [dbo].[Project] ([ProjectID]) ON DELETE CASCADE,
+    CONSTRAINT [ProjectPosition_Position] FOREIGN KEY ([BSN], [PositionName]) REFERENCES [dbo].[Position] ([BSN], [PositionName]) ON DELETE CASCADE
+);
 
 

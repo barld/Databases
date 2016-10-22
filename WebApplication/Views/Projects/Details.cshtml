@@ -44,8 +44,19 @@
             @Html.DisplayFor(model => model.BuildingName)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.RentePart)
+        </dt>
+
         <dd>
-            @Html.Raw(ViewBag.CanPay)
+            @Html.DisplayFor(model => model.RentePart)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CanPayRent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CanPayRent)
         </dd>
     </dl>
 </div>

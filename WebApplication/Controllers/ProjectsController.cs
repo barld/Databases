@@ -22,6 +22,11 @@ namespace WebApplication.Controllers
             return View(context.Projects.GetAll());
         }
 
+        public ActionResult CanNotPay()
+        {
+            return View("Index", context.Projects.GetAll().Where(p => !p.CanPayRent));
+        }
+
 
         // GET: Projects/Details/5
         public ActionResult Details(int? id)
@@ -35,8 +40,6 @@ namespace WebApplication.Controllers
             {
                 return HttpNotFound();
             }
-
-            ViewBag.CanPay = context.Projects.CanPay(project) ? "True" : "False";
             return View(project);
         }
 
