@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
@@ -89,7 +88,7 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(CreateEmployee employee)
+        public ActionResult Edit(CreateEmployee employee)
         {
             if (ModelState.IsValid)
             {
@@ -101,7 +100,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: Employees/Delete/5
-        public async Task<ActionResult> Delete(int? BSN)
+        public ActionResult Delete(int? BSN)
         {
             if (BSN == null)
             {
@@ -128,6 +127,7 @@ namespace WebApplication.Controllers
         {
             if (disposing)
             {
+                context.Dispose();
             }
             base.Dispose(disposing);
         }

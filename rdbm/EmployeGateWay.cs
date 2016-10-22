@@ -164,19 +164,6 @@ namespace rdbm
             createPositions(employee);
         }
 
-
-        public void addADR(Address adr)
-        {
-            if (con.connection.State != ConnectionState.Open)
-                con.connection.Open();
-
-            using (var cmd = new SqlCommand(string.Format("INSERT INTO [Address] values ('{0}', '{1}', '{2}', '{3}', '{4}')",
-                adr.Country, adr.PostCode, adr.HouseNumber, adr.City, adr.Street), con.connection))
-            {
-                cmd.ExecuteNonQuery();
-            }
-        }
-
         public void Add(Employee employee)
         {
             // TODO: add logic to check if addresse exists and add conection to the employee

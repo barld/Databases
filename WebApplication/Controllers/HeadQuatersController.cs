@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
@@ -16,7 +15,7 @@ namespace WebApplication.Controllers
     public class HeadQuatersController : Controller
     {
 
-        Context context = new Context();
+        IContext context = new Context();
        
         // GET: HeadQuaters
         public ActionResult Index()
@@ -123,6 +122,7 @@ namespace WebApplication.Controllers
         {
             if (disposing)
             {
+                context.Dispose();
             }
             base.Dispose(disposing);
         }

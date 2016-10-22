@@ -5,11 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rdbm", "rdbm\rdbm.csproj", "{4357F6F5-5398-4542-A7C2-7F7909E2CD03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication", "ConsoleApplication\ConsoleApplication.csproj", "{F5EEC6FE-D119-4671-AAB2-7ADF3AC70635}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeDataModels", "EmployeDataModels\EmployeDataModels.csproj", "{123807BB-8447-41BF-8027-A83585B3A794}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApplication", "WindowsFormsApplication\WindowsFormsApplication.csproj", "{F8ED8381-D0A7-4064-90A2-CDD8C269759F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication", "WebApplication\WebApplication.csproj", "{EF1C37C8-F381-4E2C-9CBD-C1FC3067CBC4}"
 EndProject
@@ -23,18 +19,10 @@ Global
 		{4357F6F5-5398-4542-A7C2-7F7909E2CD03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4357F6F5-5398-4542-A7C2-7F7909E2CD03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4357F6F5-5398-4542-A7C2-7F7909E2CD03}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F5EEC6FE-D119-4671-AAB2-7ADF3AC70635}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F5EEC6FE-D119-4671-AAB2-7ADF3AC70635}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F5EEC6FE-D119-4671-AAB2-7ADF3AC70635}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F5EEC6FE-D119-4671-AAB2-7ADF3AC70635}.Release|Any CPU.Build.0 = Release|Any CPU
 		{123807BB-8447-41BF-8027-A83585B3A794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{123807BB-8447-41BF-8027-A83585B3A794}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{123807BB-8447-41BF-8027-A83585B3A794}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{123807BB-8447-41BF-8027-A83585B3A794}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F8ED8381-D0A7-4064-90A2-CDD8C269759F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F8ED8381-D0A7-4064-90A2-CDD8C269759F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F8ED8381-D0A7-4064-90A2-CDD8C269759F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F8ED8381-D0A7-4064-90A2-CDD8C269759F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EF1C37C8-F381-4E2C-9CBD-C1FC3067CBC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EF1C37C8-F381-4E2C-9CBD-C1FC3067CBC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF1C37C8-F381-4E2C-9CBD-C1FC3067CBC4}.Release|Any CPU.ActiveCfg = Release|Any CPU

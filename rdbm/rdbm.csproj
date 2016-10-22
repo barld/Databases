@@ -59,15 +59,12 @@
     <Compile Include="AddressGateWay.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="DegreesGateWay.cs" />
-    <Compile Include="old\DataContext.cs" />
-    <Compile Include="old\DataMapper.cs" />
     <Compile Include="EmployeGateWay.cs" />
     <Compile Include="HeadQuaterGateWay.cs" />
     <Compile Include="MDFConnection.cs" />
     <Compile Include="PositionGateWay.cs" />
     <Compile Include="ProjectGateWay.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="old\SqlProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="SQL\db.sql" />
