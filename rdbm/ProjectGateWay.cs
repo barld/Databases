@@ -138,6 +138,9 @@ namespace rdbm
             }
             foreach(var d in pm.Data)
             {
+                if (!d.Assignd)
+                    continue;
+
                 const string sql = @"INSERT INTO [ProjectPosition] VALUES (@pname, @BSN, @pid);";
                 using(var cmd = new SqlCommand(sql, con.connection))
                 {
